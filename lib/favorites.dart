@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skin_disease_app/main.dart';
-
+//just placeholder example rn, dw about it
 class FavoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'home.dart';
 import 'favorites.dart';
-
+import 'results.dart';
 void main() {
   runApp(MyApp());
 }
@@ -55,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomeScreen(),
     ProfileScreen(),
     SettingsScreen(),
+    ResultsScreen(),
   ];
 
   @override
@@ -65,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -83,6 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.camera),
+            label: 'Results',
           ),
         ],
       ),

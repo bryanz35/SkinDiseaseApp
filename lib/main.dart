@@ -1,14 +1,28 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:camera/camera.dart';
+
 
 import 'results.dart';
-void main() {
-  runApp(MyApp());
+import 'camera.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
+
+  // Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.first;
+
+  runApp(MyApp(camera: firstCamera));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final CameraDescription camera;
+
+  MyApp({required this.camera});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +34,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade100),
         ),
-        home: MyHomePage(),
+        home: MyHomePage(camera: camera),
       ),
     );
   }
@@ -43,18 +57,31 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 }
+
 class MyHomePage extends StatefulWidget {
+  final CameraDescription camera;
+
+  MyHomePage({required this.camera});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
+
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
-  final List<Widget> _screens = [
-    HomeScreen(),
-    ProfileScreen(),
-    SettingsScreen(),
-    ResultsScreen(),
-  ];
+  late final List<Widget> _screens;
+
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      HomeScreen(),
+      ProfileScreen(),
+      SettingsScreen(),
+      ResultsScreen(),
+      CameraScreen(camera: widget.camera),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.camera),
             label: 'Results',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.camera),
+            label: 'Camera',
+          ),
         ],
       ),
     );
@@ -117,6 +148,24 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text('Settings Screen'),
+    );
+  }
+}
+
+class CameraScreen extends StatelessWidget {
+  final CameraDescription camera;
+
+  CameraScreen({required this.camera});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Camera Example'),
+      ),
+      body: Center(
+        child: Text('Camera: ${camera.name}'),
+      ),
     );
   }
 }

@@ -82,7 +82,31 @@ class _ResultsScreenState extends State<ResultsScreen> {
     'Vasculitis',
     'Warts and Viral Infections'
   ];
-
+  List<String> diseaseAdvice = [
+    'Keep the skin clean, avoid touching your face, and consider over-the-counter treatments with benzoyl peroxide or salicylic acid.', // Acne
+    'Regularly check your skin for changes, use sunscreen daily, and see a dermatologist for a skin exam.', // Skin Cancer (Melanoma)
+    'Identify and avoid triggers, use moisturizers, and consider topical corticosteroids for inflammation.', // Dermatitis
+    'Avoid popping blisters; keep them clean and covered to prevent infection. If they burst, clean gently and apply a bandage.', // Blisters
+    'Consult a healthcare professional for appropriate antibiotics, and keep affected areas clean and dry.', // Bacterial Infections
+    'Use moisturizers regularly, avoid irritants, and consider topical treatments prescribed by a doctor.', // Eczema
+    'Identify the cause (allergic reaction, infection, etc.), and use antihistamines or topical creams as needed.', // Rashes
+    'Consult a dermatologist for potential treatments, consider a balanced diet, and manage stress.', // Hair Loss
+    'Practice safe sex, use antiviral medications as prescribed, and avoid outbreaks by managing stress.', // Herpes
+    'Use sunscreen daily, consult a dermatologist for treatments like creams or laser therapy.', // Pigmentation Issues
+    'Early detection is crucial; monitor skin changes and consult a healthcare professional immediately if changes occur.', // Lupus
+    'Monitor skin changes and consult a healthcare professional immediately if changes occur.', // Melanoma
+    'Keep nails trimmed and clean, use antifungal treatments, and consider seeing a doctor for persistent cases.', // Nail Fungus
+    'Wash the affected area immediately with soap and water, use topical steroids for itching, and avoid scratching.', // Poison Ivy
+    'Use moisturizing creams, consider phototherapy, and discuss systemic treatments with a dermatologist.', // Psoriasis
+    'Seek medical treatment for scabicide medications, and wash all clothing and bedding to prevent re-infestation.', // Scabies
+    'Monitor any changes and consult with a healthcare professional if they grow or cause discomfort.', // Benign Tumors
+    'Follow the treatment plan prescribed by a healthcare provider and maintain regular check-ups.', // Systemic Disease
+    'Keep the affected area dry, use antifungal treatments as directed, and avoid sharing personal items.', // Fungal Infections
+    'Identify and avoid triggers, and use antihistamines for relief.', // Hives
+    'Consult a specialist for diagnosis and potential treatments, including observation or surgical options.', // Vascular Tumors
+    'Follow your doctor’s treatment plan, which may include immunosuppressive drugs, and monitor symptoms closely.', // Vasculitis
+    'Use over-the-counter treatments, avoid picking at warts, and consider professional removal if necessary.' // Warts and Viral Infections
+  ];
   // List of indices to exclude (diseases that should be labeled as unclassifiable)
   List<int> excludeList = [
     2,
@@ -108,7 +132,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     List<Map<String, dynamic>> predictions = [];
     for (int i = 0; i < probabilities.length; i++) {
       String diseaseName = diseaseNames[i];
-      String description = "This is a brief description of $diseaseName.";
+      String description = diseaseAdvice[i];
 
       // Check if the disease index is in the exclude list
       if (excludeList.contains(i)) {
@@ -157,7 +181,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${prediction['name']}: ${prediction['probability']?.toStringAsFixed(2)}%',
+                      '${prediction['name']}:',
                       style: TextStyle(
                           fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),

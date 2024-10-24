@@ -1,46 +1,43 @@
-//results screen after camera
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:skin_disease_app/main.dart';
-import 'package:skin_disease_app/home.dart';
 
 class ResultsScreen extends StatelessWidget {
+  final String imagePath;
+
+  ResultsScreen({required this.imagePath});
+
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
-
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Scan Results"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () {
+              // Logic to save the result to profile
+            },
+          ),
+        ],
+      ),
+      body: Column(
         children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
-            ],
+          Image.file(File(imagePath)),
+          SizedBox(height: 20),
+          // Display the list of possible diseases with percentages
+          ListTile(
+            title: Text('Acne: 85%'),
+          ),
+          ListTile(
+            title: Text('Eczema: 10%'),
+          ),
+          // More results here...
+          Spacer(),
+          ElevatedButton(
+            onPressed: () {
+              // Logic to contact a doctor
+            },
+            child: Text('Contact Doctor'),
           ),
         ],
       ),

@@ -24,9 +24,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
     try {
       // Load the model asynchronously
       ClassificationModel classificationModel = await FlutterPytorch.loadClassificationModel(
-          "assets/models/model_classification.pt",
-          128,
-          128
+        "assets/models/model_classification.pt",
+        128,
+        128,
       );
 
       // Ensure the model is not null
@@ -67,7 +67,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   // Method to get top three predictions, checking against the excludeList
   List<Map<String, dynamic>> _getTopThreePredictions(List<double?> probabilities) {
-    // Create a list of predictions with their actual disease names
+    // Create a list of predictions with their indices
+
     List<Map<String, dynamic>> predictions = [];
     for (int i = 0; i < probabilities.length; i++) {
       String diseaseName = diseaseNames[i];
@@ -96,16 +97,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Scan Results"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () {
-              // Logic to save the result to profile
-            },
-          ),
-        ],
+        backgroundColor: Color(0xFF0A4DA2),
+
       ),
       body: ListView(
+        padding: EdgeInsets.all(16.0),
         children: [
           Image.file(File(widget.imagePath)),
           SizedBox(height: 20),
@@ -143,6 +139,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
           ],
           SizedBox(height: 20),
           ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              foregroundColor: Color(0xFF0A4DA2), // Button color
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
             onPressed: () {
               // Logic to contact a doctor
             },

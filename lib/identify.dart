@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'camera.dart'; // Camera functionality
-// Result screen after scanning
 
 class IdentifyPage extends StatelessWidget {
   @override
@@ -13,9 +12,9 @@ class IdentifyPage extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           shape: CircleBorder(),
           padding: EdgeInsets.all(50),
-          backgroundColor: Colors.blue, // Button color
+          backgroundColor: Color(0xFF0A4DA2), // Button color (Deep Blue)
         ),
-        child: Icon(Icons.camera_alt, size: 50),
+        child: Icon(Icons.camera_alt, size: 50, color: Colors.white),
       ),
     );
   }
@@ -25,7 +24,7 @@ class IdentifyPage extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Questionnaire"),
+          title: Text("Questionnaire", style: TextStyle(color: Color(0xFF0A4DA2))),
           content: SingleChildScrollView(
             child: Column(
               children: [
@@ -67,17 +66,16 @@ class IdentifyPage extends StatelessWidget {
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
-                _openCamera(context); // Proceed to camera after survey
-
+                _openCamera(context);
               },
-              child: Text("Submit"),
+              child: Text("Submit", style: TextStyle(color: Color(0xFF0A4DA2))),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                _openCamera(context); // Skip questionnaire
+                _openCamera(context);
               },
-              child: Text("Skip"),
+              child: Text("Skip", style: TextStyle(color: Color(0xFF0A4DA2))),
             ),
           ],
         );
@@ -111,13 +109,14 @@ class _SurveyQuestionState extends State<SurveyQuestion> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.label),
+        Text(widget.label, style: TextStyle(fontSize: 16, color: Color(0xFF333333))),
         SizedBox(height: 8),
         Wrap(
           spacing: 8.0,
           children: widget.options.map((option) {
             return ChoiceChip(
-              label: Text(option),
+              label: Text(option, style: TextStyle(color: _selectedOption == option ? Colors.white : Color(0xFF0A4DA2))),
+              selectedColor: Color(0xFF0A4DA2),
               selected: _selectedOption == option,
               onSelected: (selected) {
                 setState(() {
@@ -131,4 +130,3 @@ class _SurveyQuestionState extends State<SurveyQuestion> {
     );
   }
 }
-

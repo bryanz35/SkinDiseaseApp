@@ -68,6 +68,7 @@ class _CameraScreenState extends State<CameraScreen> {
               context,
               MaterialPageRoute(builder: (context) => ResultsScreen(imagePath: image.path)),
             );
+
           } catch (e) {
             print(e);
           }

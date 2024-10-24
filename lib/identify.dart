@@ -65,9 +65,10 @@ class IdentifyPage extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop();
                 _openCamera(context); // Proceed to camera after survey
+
               },
               child: Text("Submit"),
             ),

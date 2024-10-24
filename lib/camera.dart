@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'results.dart';
+import 'main.dart' as main;
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -9,22 +9,37 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  late CameraController _controller;
-  late Future<void> _initializeControllerFuture;
+  late CameraController controller;
+
 
   @override
   void initState() {
     super.initState();
-    _controller = CameraController(
-      availableCameras().first, // Get the first camera available
-      ResolutionPreset.medium,
-    );
-    _initializeControllerFuture = _controller.initialize();
+    controller = CameraController(main.cameras[0], ResolutionPreset.max);
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    }).catchError((Object e) {
+      if (e is CameraException) {
+        switch (e.code) {
+          case 'CameraAccessDenied':
+          // Handle access errors here.
+            break;
+          default:
+          // Handle other errors here.
+            break;
+        }
+      }
+    });
   }
+
+
 
   @override
   void dispose() {
-    _controller.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -36,7 +51,7 @@ class _CameraScreenState extends State<CameraScreen> {
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller);
+            return CameraPreview(controller);
           } else {
             return Center(child: CircularProgressIndicator());
           }
@@ -46,7 +61,7 @@ class _CameraScreenState extends State<CameraScreen> {
         onPressed: () async {
           try {
             await _initializeControllerFuture;
-            final image = await _controller.takePicture();
+            final image = await controller.takePicture();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ResultsScreen(imagePath: image.path)),
@@ -60,4 +75,6 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 }
+
+
 

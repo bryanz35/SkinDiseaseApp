@@ -5,17 +5,16 @@ import 'identify.dart';
 import 'profile.dart';
 import 'learn.dart';
 
+late List<CameraDescription> cameras;
+
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
-  final cameras = await availableCameras();
-  final firstCamera = cameras.first;
-  runApp(MyApp(camera: firstCamera));
+  cameras = await availableCameras();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final CameraDescription camera;
-
-  MyApp({required this.camera});
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +24,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(camera: camera),
+      home: SplashScreen(),
     );
   }
 }
 
 class SplashScreen extends StatefulWidget {
-  final CameraDescription camera;
 
-  SplashScreen({required this.camera});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -45,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => MyHomePage(camera: widget.camera)),
+        MaterialPageRoute(builder: (context) => MyHomePage()),
       );
     });
   }
@@ -69,9 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 class MyHomePage extends StatefulWidget {
-  final CameraDescription camera;
 
-  MyHomePage({required this.camera});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'TBD App',
+      title: 'SkinSpot',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("TBD", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            Text("SkinSpot", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
             CircularProgressIndicator(),
           ],
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('TBD App')),
+      appBar: AppBar(title: Text('SkinSpot', style: TextStyle(fontSize:  30, fontWeight: FontWeight.bold))),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

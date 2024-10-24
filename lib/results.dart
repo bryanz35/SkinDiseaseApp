@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_pytorch/flutter_pytorch.dart';
 
 class ResultsScreen extends StatelessWidget {
   final String imagePath;
@@ -14,8 +15,32 @@ class ResultsScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.save),
-            onPressed: () {
-              // Logic to save the result to profile
+            onPressed: () async {
+              try {
+                // Load the model asynchronously
+                ClassificationModel classificationModel = await FlutterPytorch.loadClassificationModel(
+                    "assets/models/model_classification.pt",
+                  128, 
+                  128
+                );
+                
+                // Ensure the model is not null
+                if (classificationModel != null) {
+                  // Get the image file
+                  File imageFile = File(imagePath);
+
+                  // Perform prediction
+                  List<double?>? predictionListProbabilities = await classificationModel.getImagePredictionListProbabilities(
+                    await imageFile.readAsBytes(),
+                  );
+
+                  // Handle the prediction result (e.g., display or save)
+                  print(predictionListProbabilities);
+                }
+              } catch (e) {
+                // Handle errors
+                print("Error during model loading or prediction: $e");
+              }
             },
           ),
         ],

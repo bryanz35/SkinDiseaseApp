@@ -10,12 +10,12 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController controller;
-
+  late Future<void> _initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
-    controller = CameraController(main.cameras[0], ResolutionPreset.max);
+    controller = CameraController(main.cameras[0], ResolutionPreset.medium);
     controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -33,6 +33,7 @@ class _CameraScreenState extends State<CameraScreen> {
         }
       }
     });
+    _initializeControllerFuture = controller.initialize();
   }
 
 
@@ -45,6 +46,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(title: const Text('Camera')),
       body: FutureBuilder<void>(
@@ -74,6 +76,8 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
     );
   }
+
+
 }
 
 

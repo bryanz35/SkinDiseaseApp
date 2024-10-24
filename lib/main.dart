@@ -21,14 +21,12 @@ class MyApp extends StatelessWidget {
       title: 'SkinSpot',
       theme: ThemeData(
         primaryColor: Color(0xFF0A4DA2), // Deep Blue
-        accentColor: Color(0xFF87CEEB),  // Light Blue
         scaffoldBackgroundColor: Color(0xFFF3F4F6), // Light Grey
         textTheme: TextTheme(
-          bodyText2: TextStyle(color: Color(0xFF333333)), // Dark Grey
+          bodyMedium: TextStyle(color: Color(0xFF333333)), // Dark Grey
         ),
         buttonTheme: ButtonThemeData(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          buttonColor: Color(0xFF0A4DA2), // Deep Blue
         ),
       ),
       home: SplashScreen(),
@@ -98,7 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('SkinSpot', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFF0A4DA2),
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

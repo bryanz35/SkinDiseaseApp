@@ -74,14 +74,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
       appBar: AppBar(
         title: Text("Scan Results"),
         backgroundColor: Color(0xFF0A4DA2),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () {
-              // Logic to save the result to profile
-            },
-          ),
-        ],
+
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
@@ -104,7 +97,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 16.0),
-              primary: Color(0xFF0A4DA2), // Button color
+              foregroundColor: Color(0xFF0A4DA2), // Button color
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
             onPressed: () {

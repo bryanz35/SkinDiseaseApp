@@ -24,9 +24,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
     try {
       // Load the model asynchronously
       ClassificationModel classificationModel = await FlutterPytorch.loadClassificationModel(
-          "assets/models/model_classification.pt",
-          128,
-          128
+        "assets/models/model_classification.pt",
+        128,
+        128,
       );
 
       // Ensure the model is not null
@@ -55,7 +55,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   List<Map<String, dynamic>> _getTopThreePredictions(List<double?> probabilities) {
     // Create a list of predictions with their indices
-
     List<Map<String, dynamic>> predictions = [];
     for (int i = 0; i < probabilities.length; i++) {
       predictions.add({
@@ -74,6 +73,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Scan Results"),
+        backgroundColor: Color(0xFF0A4DA2),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
@@ -84,6 +84,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
         ],
       ),
       body: ListView(
+        padding: EdgeInsets.all(16.0),
         children: [
           Image.file(File(widget.imagePath)),
           SizedBox(height: 20),
@@ -91,7 +92,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
           if (topThreePredictions != null) ...[
             for (var prediction in topThreePredictions!)
               ListTile(
-                title: Text('${prediction['name']}: ${prediction['probability']?.toStringAsFixed(2)}%'), //
+                title: Text('${prediction['name']}: ${prediction['probability']?.toStringAsFixed(2)}%'),
               ),
           ] else ...[
             // Placeholder while predictions are loading
@@ -101,14 +102,18 @@ class _ResultsScreenState extends State<ResultsScreen> {
           ],
           SizedBox(height: 20),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              primary: Color(0xFF0A4DA2), // Button color
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
             onPressed: () {
               // Logic to contact a doctor
             },
-            child: Text('Contact Doctor'),
+            child: Text('Contact Doctor', style: TextStyle(fontSize: 16)),
           ),
         ],
       ),
     );
   }
 }
-

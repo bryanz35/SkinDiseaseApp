@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 import 'camera.dart'; // Camera functionality
-import 'results.dart'; // Result screen after scanning
+// Result screen after scanning
 
 class IdentifyPage extends StatelessWidget {
   @override

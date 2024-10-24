@@ -23,7 +23,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
   Future<void> _loadModelAndPredict() async {
     try {
       // Load the model asynchronously
-      ClassificationModel classificationModel = await FlutterPytorch.loadClassificationModel(
+      ClassificationModel classificationModel =
+          await FlutterPytorch.loadClassificationModel(
         "assets/models/model_classification.pt",
         128,
         128,
@@ -35,13 +36,15 @@ class _ResultsScreenState extends State<ResultsScreen> {
         File imageFile = File(widget.imagePath);
 
         // Perform prediction
-        List<double?>? predictionListProbabilities = await classificationModel.getImagePredictionListProbabilities(
+        List<double?>? predictionListProbabilities =
+            await classificationModel.getImagePredictionListProbabilities(
           await imageFile.readAsBytes(),
         );
 
         if (predictionListProbabilities != null) {
           // Process the predictions to get the top 3
-          topThreePredictions = _getTopThreePredictions(predictionListProbabilities);
+          topThreePredictions =
+              _getTopThreePredictions(predictionListProbabilities);
         }
 
         // Trigger a rebuild with the predictions
@@ -55,18 +58,51 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   // List of diseases with simplified names
   List<String> diseaseNames = [
-    'Acne', 'Skin Cancer (Melanoma)', 'Dermatitis', 'Blisters', 'Bacterial Infections',
-    'Eczema', 'Rashes', 'Hair Loss', 'Herpes', 'Pigmentation Issues',
-    'Lupus', 'Melanoma', 'Nail Fungus', 'Poison Ivy', 'Psoriasis',
-    'Scabies', 'Benign Tumors', 'Systemic Disease', 'Fungal Infections',
-    'Hives', 'Vascular Tumors', 'Vasculitis', 'Warts and Viral Infections'
+    'Acne',
+    'Skin Cancer (Melanoma)',
+    'Dermatitis',
+    'Blisters',
+    'Bacterial Infections',
+    'Eczema',
+    'Rashes',
+    'Hair Loss',
+    'Herpes',
+    'Pigmentation Issues',
+    'Lupus',
+    'Melanoma',
+    'Nail Fungus',
+    'Poison Ivy',
+    'Psoriasis',
+    'Scabies',
+    'Benign Tumors',
+    'Systemic Disease',
+    'Fungal Infections',
+    'Hives',
+    'Vascular Tumors',
+    'Vasculitis',
+    'Warts and Viral Infections'
   ];
 
   // List of indices to exclude (diseases that should be labeled as unclassifiable)
-  List<int> excludeList =             [2, 3, 4, 6,8,9,10,13,15,17,19,20,21]; // Example: Exclude "Rashes", "Lupus", "Systemic Disease", etc.
+  List<int> excludeList = [
+    2,
+    3,
+    4,
+    6,
+    8,
+    9,
+    10,
+    13,
+    15,
+    17,
+    19,
+    20,
+    21
+  ]; // Example: Exclude "Rashes", "Lupus", "Systemic Disease", etc.
 
   // Method to get top three predictions, checking against the excludeList
-  List<Map<String, dynamic>> _getTopThreePredictions(List<double?> probabilities) {
+  List<Map<String, dynamic>> _getTopThreePredictions(
+      List<double?> probabilities) {
     // Create a list of predictions with their indices
 
     List<Map<String, dynamic>> predictions = [];
@@ -77,7 +113,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
       // Check if the disease index is in the exclude list
       if (excludeList.contains(i)) {
         diseaseName = "Unclassifiable or No Skin Disease";
-        description = "This condition is not recognized or not classified as a skin disease.";
+        description =
+            "This condition is not recognized or not classified as a skin disease.";
       }
 
       predictions.add({
@@ -88,7 +125,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
     }
 
     // Sort predictions by probability in descending order and take the top 3
-    predictions.sort((a, b) => (b['probability'] ?? 0).compareTo(a['probability'] ?? 0));
+    predictions.sort(
+        (a, b) => (b['probability'] ?? 0).compareTo(a['probability'] ?? 0));
     return predictions.take(3).toList();
   }
 
@@ -98,7 +136,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
       appBar: AppBar(
         title: Text("Scan Results"),
         backgroundColor: Color(0xFF0A4DA2),
-
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
@@ -121,7 +158,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   children: [
                     Text(
                       '${prediction['name']}: ${prediction['probability']?.toStringAsFixed(2)}%',
-                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 8.0),
                     Text(
@@ -140,19 +178,18 @@ class _ResultsScreenState extends State<ResultsScreen> {
           SizedBox(height: 20),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               foregroundColor: Color(0xFF0A4DA2), // Button color
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              textStyle: TextStyle(fontSize: 16.0),
+
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
             ),
             onPressed: () {
               // Logic to contact a doctor
             },
             icon: Icon(Icons.local_hospital),
             label: Text('Contact Doctor'),
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-              textStyle: TextStyle(fontSize: 16.0),
-            ),
           ),
         ],
       ),
